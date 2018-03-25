@@ -1,0 +1,6 @@
+.RProj
+.RProj*
+.RProj/*
+data
+./data/*
+data/*
