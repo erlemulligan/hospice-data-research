@@ -22,8 +22,13 @@ patientData <- read_sas(patientDataFile)
 
 patientDataClean <- patientData %>%
   mutate(
+    # factorizing depression
+    DEPRESS = factor(DEPRESS, levels = c(1,2,-1,-7,-8), labels = c('DEPRESSED', 'NOT DEPRESSED', 'INAPPLICABLE/NOT ASCERTAINED', 'RF', 'DK')),
     # making all 'INAPPLICABLE/NOT CERTAIN', 'RF' and 'DK' values = NA
     HOSPICEDAYS = replace(HOSPICEDAYS, which(HOSPICEDAYS < 0L), NA),
     # factorizing sex
     SEX = factor(SEX, levels = c(1, 2), labels = c('Male', 'Female'))
   )
+
+summary(patientDataClean$DEPRESS)
+qplot(patientDataClean$DEPRESS)
