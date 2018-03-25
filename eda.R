@@ -18,9 +18,9 @@ if (!file.exists(patientDataFile)) {
   download.file('ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/NHHCS/2007/SAS_Data/patientpuf_nhhcs07_SASData_093009.zip', destfile=patientDataFile)
 }
 
-patientData <- read_sas(patientDataFile)
+patientDataOriginal <- read_sas(patientDataFile)
 
-patientDataClean <- patientData %>%
+patientData <- patientDataOriginal %>%
   mutate(
     # factorizing depression
     DEPRESS = factor(DEPRESS, levels = c(1,2,-1,-7,-8), labels = c('DEPRESSED', 'NOT DEPRESSED', 'INAPPLICABLE/NOT ASCERTAINED', 'RF', 'DK')),
@@ -30,5 +30,8 @@ patientDataClean <- patientData %>%
     SEX = factor(SEX, levels = c(1, 2), labels = c('Male', 'Female'))
   )
 
-summary(patientDataClean$DEPRESS)
-qplot(patientDataClean$DEPRESS)
+summary(patientData$DEPRESS)
+qplot(patientData$DEPRESS)
+
+summary(patientData$HOSPICEDAYS)
+qplot(patientData$HOSPICEDAYS)
