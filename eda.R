@@ -24,15 +24,23 @@ patientData <- patientDataOriginal %>%
   mutate(
     # factorizing depression
     DEPRESS = factor(DEPRESS, levels = c(1,2,-1,-7,-8), labels = c('DEPRESSED', 'NOT DEPRESSED', 'INAPPLICABLE/NOT ASCERTAINED', 'RF', 'DK')),
+    # factorizing depression level
+    DEPRESLV = factor(DEPRESLV, levels = c(1,2,-1,-7,-8), labels = c('DEPRESSED', 'NOT DEPRESSED', 'INAPPLICABLE/NOT ASCERTAINED', 'RF', 'DK')),
     # making all 'INAPPLICABLE/NOT CERTAIN', 'RF' and 'DK' values = NA
-    HOSPICEDAYS = replace(HOSPICEDAYS, which(HOSPICEDAYS < 0L), NA),
+    HOSPICEDAYS = replace(HOSPICEDAYS, which(HOSPICEDAYS < 0), NA),
     # factorizing sexx
-    SEX = factor(SEX, levels = c(1, 2), labels = c('Male', 'Female'))
+    SEX = factor(SEX, levels = c(1, 2), labels = c('Male', 'Female')),
+    # factorizing primary diagnosis (CDDX1)
+    primaryDiagnosis = factor(CDDX1)
   )
 
 # summary of depression state
 summary(patientData$DEPRESS)
 qplot(patientData$DEPRESS)
+
+# summary of depression level state
+summary(patientData$DEPRESLV)
+qplot(patientData$DEPRESLV)
 
 # summary of days spent in hospice care
 summary(patientData$HOSPICEDAYS)
