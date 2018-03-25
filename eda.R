@@ -1,11 +1,8 @@
 install.packages('tidyverse')
 library('tidyverse')
 
-install.packages('dplyr')
-library('dplyr')
-
-install.packages('ggplot2')
-library('ggplot2')
+install.packages('haven')
+library('haven')
 
 dataDirectory = './data'
 patientDataFile = './data/patientData.zip'
@@ -26,7 +23,7 @@ patientData <- patientDataOriginal %>%
     DEPRESS = factor(DEPRESS, levels = c(1,2,-1,-7,-8), labels = c('DEPRESSED', 'NOT DEPRESSED', 'INAPPLICABLE/NOT ASCERTAINED', 'RF', 'DK')),
     # making all 'INAPPLICABLE/NOT CERTAIN', 'RF' and 'DK' values = NA
     HOSPICEDAYS = replace(HOSPICEDAYS, which(HOSPICEDAYS < 0L), NA),
-    # factorizing sex
+    # factorizing sexx
     SEX = factor(SEX, levels = c(1, 2), labels = c('Male', 'Female'))
   )
 
