@@ -17,6 +17,9 @@ if (!file.exists(patientDataFile)) {
 
 patientDataOriginal <- read_sas(patientDataFile)
 
+# TODO:
+# 1. filter out comatose and dead on arrival patients
+# 2. factorize other potential quality of life indicators
 patientData <- patientDataOriginal %>%
   mutate(
     # factorizing depression
@@ -27,8 +30,10 @@ patientData <- patientDataOriginal %>%
     SEX = factor(SEX, levels = c(1, 2), labels = c('Male', 'Female'))
   )
 
+# summary of depression state
 summary(patientData$DEPRESS)
 qplot(patientData$DEPRESS)
 
+# summary of days spent in hospice care
 summary(patientData$HOSPICEDAYS)
 qplot(patientData$HOSPICEDAYS)
