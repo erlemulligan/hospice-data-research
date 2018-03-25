@@ -1,5 +1,5 @@
-install.packages('haven')
-library('haven')
+install.packages('tidyverse')
+library('tidyverse')
 
 install.packages('dplyr')
 library('dplyr')
@@ -18,7 +18,12 @@ if (!file.exists(patientDataFile)) {
   download.file('ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/NHHCS/2007/SAS_Data/patientpuf_nhhcs07_SASData_093009.zip', destfile=patientDataFile)
 }
 
-patientData <- read_sas(patientDataFile, catalog_file = NULL, 
-                        encoding = NULL)
+patientData <- read_sas(patientDataFile)
 
-str(patientData)
+patientDataClean <- patientData %>%
+  mutate(
+    # making all 'INAPPLICABLE/NOT CERTAIN', 'RF' and 'DK' values = NA
+    HOSPICEDAYS = replace(HOSPICEDAYS, which(HOSPICEDAYS < 0L), NA),
+    # factorizing sex
+    SEX = factor(SEX, levels = c(1, 2), labels = c('Male', 'Female'))
+  )
